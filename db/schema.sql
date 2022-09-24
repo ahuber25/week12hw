@@ -14,7 +14,7 @@ VALUES
     ('Intensivist', 100000, 2),
     ('Neurologist', 120000, 2),
     ('Immunologist', 120000, 2),
-    ('Oncologist', 250000, 3)
+    ('Oncologist', 250000, 3);
 
 INSERT INTO employee
     (first_name, last_name, role_id, manager_id)
