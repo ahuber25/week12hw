@@ -64,10 +64,6 @@ function loadInitialPrompts() {
                     value: "REMOVE_DEPARTMENT"
                 },
                 {
-                    name: "View Total Utilized Budget By Department",
-                    value: "VIEW_UTILIZED_BUDGET_BY_DEPARTMENT"
-                },
-                {
                     name: "Quit",
                     value: "QUIT"
                 }
@@ -106,9 +102,6 @@ function loadInitialPrompts() {
                 case "REMOVE_DEPARTMENT":
                     removeDepartment();
                     break;
-                case "VIEW_UTILIZED_BUDGET_BY_DEPARTMENT":
-                    viewUtilizedBudgetByDepartment();
-                    break;
                 case "VIEW_ROLES":
                     viewRoles();
                     break;
@@ -131,7 +124,7 @@ function viewEmployees() {
         console.log("\n");
         console.table(employees);
     })
-    .then(() => loadInitialPrompts);
+    .then(() => loadInitialPrompts());
 };
 
 function viewEmployeesByDepartment() {
@@ -414,16 +407,6 @@ function viewEmployeesByDepartment() {
           .then(() => console.log(`Removed department from the database`))
           .then(() => loadInitialPrompts())
       })
-  }
-  
-  function viewUtilizedBudgetByDepartment() {
-    db.viewDepartmentBudgets()
-      .then(([rows]) => {
-        let departments = rows;
-        console.log("\n");
-        console.table(departments);
-      })
-      .then(() => loadInitialPrompts());
   }
 
   function addEmployee() {
