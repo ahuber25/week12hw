@@ -29,6 +29,64 @@ class DB {
       );
     }
   
+    updateEmployeeRole(employeeId, roleId) {
+      return this.connects.promise().query(
+        "UPDATE employee SET role_id = ? WHERE id = ?",
+        [roleId, employeeId]
+      );
+    }
+  
+    updateEmployeeManager(employeeId, managerId) {
+      return this.connects.promise().query(
+        "UPDATE employee SET manager_id = ? WHERE id = ?",
+        [managerId, employeeId]
+      );
+    }
+  
+    findAllRoles() {
+      return this.connects.promise().query(
+        "SELECT role.id, role.title, department.name AS department, role.salary FROM role LEFT JOIN department on role.department_id = department.id;"
+      );
+    }
+  
+    createRole(role) {
+      return this.connects.promise().query("INSERT INTO role SET ?", role);
+    }
+  
+    removeRole(roleId) {
+      return this.connects.promise().query("DELETE FROM role WHERE id = ?", roleId);
+    }
+  
+    findAllDepartments() {
+      return this.connects.promise().query(
+        "SELECT department.id, department.name FROM department;"
+      );
+    }
+  
+    createDepartment(department) {
+      return this.connects.promise().query("INSERT INTO department SET ?", department);
+    }
+  
+    removeDepartment(departmentId) {
+      return this.connects.promise().query(
+        "DELETE FROM department WHERE id = ?",
+        departmentId
+      );
+    }
+  
+    findAllEmployeesByDepartment(departmentId) {
+      return this.connects.promise().query(
+        "SELECT employee.id, employee.first_name, employee.last_name, role.title FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department department on role.department_id = department.id WHERE department.id = ?;",
+        departmentId
+      );
+    }
+
+    findAllEmployeesByManager(managerId) {
+      return this.connects.promise().query(
+        "SELECT employee.id, employee.first_name, employee.last_name, department.name AS department, role.title FROM employee LEFT JOIN role on role.id = employee.role_id LEFT JOIN department ON department.id = role.department_id WHERE manager_id = ?;",
+        managerId
+      );
+    }
   }
   
   module.exports = new DB(connects);  
